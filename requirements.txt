@@ -2,3 +2,4 @@ pandas
 numpy
 jupyter
 nbconvert
+openpyxl>=3.0.0
