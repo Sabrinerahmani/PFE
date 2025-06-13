@@ -22,9 +22,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install jupyter
         pip install -r requirements.txt
         
     - name: Run both Python notebooks
       run: |
-        jupyter nbconvert --to python --execute dep_product_preprocessing.ipynb
-        jupyter nbconvert --to python --execute others__.ipynb
+        jupyter execute dep_product_preprocessing.ipynb
+        jupyter execute others__.ipynb
