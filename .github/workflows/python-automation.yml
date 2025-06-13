@@ -2,9 +2,8 @@ name: Run Python Scripts Every 3 Hours
 
 on:
   schedule:
-    # Exécute toutes les 3 heures (0 */3 * * *)
     - cron: '0 */3 * * *'
-  workflow_dispatch: # Permet d'exécuter manuellement
+  workflow_dispatch:
 
 jobs:
   run-python-scripts:
@@ -24,6 +23,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install jupyter
         pip install -r requirements.txt
+        
+    - name: Copy Excel files to root directory
+      run: |
+        cp excel_files/*.xlsx . 2>/dev/null || true
+        cp excel_files/*.xls . 2>/dev/null || true
+        ls -la *.xlsx *.xls 2>/dev/null || echo "No Excel files found"
         
     - name: Run both Python notebooks
       run: |
