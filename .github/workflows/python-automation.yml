@@ -7,6 +7,7 @@ on:
 
 jobs:
   run-python-scripts:
+    if: ${{ false }}  # Désactive temporairement ce job
     runs-on: ubuntu-latest
     
     steps:
@@ -31,6 +32,10 @@ jobs:
         ls -la *.xlsx *.xls 2>/dev/null || echo "No Excel files found"
         
     - name: Run both Python notebooks
+      run: |
+        jupyter nbconvert --to notebook --execute notebook1.ipynb
+        jupyter nbconvert --to notebook --execute notebook2.ipynb
+
       run: |
         jupyter execute dep_product_preprocessing.ipynb
         jupyter execute others__.ipynb
