@@ -1,41 +1,43 @@
 name: Run Python Scripts Every 3 Hours
 
 on:
-  schedule:
-    - cron: '0 */3 * * *'
+  
+  # schedule:
+  #   - cron: '0 */3 * * *'  # Tous les 3 heures
+
   workflow_dispatch:
 
 jobs:
   run-python-scripts:
-    if: ${{ false }}  # Désactive temporairement ce job
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install jupyter
-        pip install -r requirements.txt
-        
-    - name: Copy Excel files to root directory
-      run: |
-        cp excel_files/*.xlsx . 2>/dev/null || true
-        cp excel_files/*.xls . 2>/dev/null || true
-        ls -la *.xlsx *.xls 2>/dev/null || echo "No Excel files found"
-        
-    - name: Run both Python notebooks
-      run: |
-        jupyter nbconvert --to notebook --execute notebook1.ipynb
-        jupyter nbconvert --to notebook --execute notebook2.ipynb
+    runs-on: ubuntu-latest  # Utilise une machine Ubuntu pour exécuter les scripts
 
-      run: |
-        jupyter execute dep_product_preprocessing.ipynb
-        jupyter execute others__.ipynb
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+     
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jupyter
+          pip install -r requirements.txt
+
+      
+      - name: Copy Excel files to root directory
+        run: |
+          cp excel_files/*.xlsx . 2>/dev/null || true
+          cp excel_files/*.xls . 2>/dev/null || true
+          ls -la *.xlsx *.xls 2>/dev/null || echo "No Excel files found"
+
+      - name: Run both Python notebooks
+        run: |
+          jupyter nbconvert --to notebook --execute notebook1.ipynb
+          jupyter nbconvert --to notebook --execute notebook2.ipynb
+
+     
